@@ -12,12 +12,9 @@ class HeaderWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              "Accueil",
-              style: TextStyle(color: Colors.white),
-            ),
-            Text("Nouveau", style: TextStyle(color: Colors.white)),
-            Text("Rechercher", style: TextStyle(color: Colors.white)),
+            IconButton(onPressed: () {}, icon: Image.asset("pencil.png", width: 24,)),
+            Text("Accueil", style: TextStyle(color: Colors.white)),
+            IconButton(onPressed: () {}, icon: Image.asset("search.png", width: 24,)),
           ],
         ),
       ),
