@@ -47,13 +47,13 @@ class MessageCard extends StatelessWidget {
                                 tweet.author,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Text("56s")
+                              Text(tweet.formatDuration())
                             ],
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5.0),
                             child: Text(
-                              tweet.content,
+                              tweet.message,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 3,
                             ),

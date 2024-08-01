@@ -3,14 +3,35 @@ import 'package:rcda_012_tp_flutter/footer.dart';
 import 'package:rcda_012_tp_flutter/header.dart';
 import 'package:rcda_012_tp_flutter/message-card.dart';
 import 'package:rcda_012_tp_flutter/tweet.dart';
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 
-class MyHomePage extends StatelessWidget {
-  // Ma liste de tweets en dur
-  var tweets = [
-    Tweet("denis@gmail.com", "Lui c'est un guignol"),
-    Tweet("mathis@gmail.com", "J'ai des questions"),
-    Tweet("isaac@gmail.com", "Je parle trop vite assez souvent quand même"),
-  ];
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  // Ma liste de tweets vide par défaut
+  List<Tweet> tweets = [];
+
+  /// Appel l'api
+  void callApi(BuildContext context) async {
+    // l'url
+    var url = Uri.parse("https://raw.githubusercontent.com/Chocolaterie/EniWebService/main/api/tweets.json");
+
+    // appeler l'url
+    var response = await http.get(url);
+
+    // mapper la reponse en json
+    var responseBodyJson = convert.jsonDecode(response.body);
+
+    // mapper le json en liste de Tweet
+    tweets = List<Tweet>.from(responseBodyJson.map((tweetJson) =>Tweet.fromJson(tweetJson)).toList());
+
+    // Rafraichir l'écran
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +47,9 @@ class MyHomePage extends StatelessWidget {
               child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                ElevatedButton(onPressed: () { callApi(context); }, child: Text("Je Climatiseur")),
                 Expanded(
                     child: ListView.builder(
                         itemCount: tweets.length,
