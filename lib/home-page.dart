@@ -5,6 +5,7 @@ import 'package:rcda_012_tp_flutter/message-card.dart';
 import 'package:rcda_012_tp_flutter/tweet.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -17,6 +18,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   /// Appel l'api
   void callApi(BuildContext context) async {
+    // Afficher popup chargement
+    var pd = ProgressDialog(context: context);
+
+    pd!.show(
+      msg: "Récupération des messages en cours",
+      barrierColor: Color(0x77000000),
+      progressBgColor: Colors.transparent,
+      elevation: 10.0
+    );
+
+    // FAKE: Simuler un lag de 1 seconde
+    await Future.delayed(Duration(seconds: 1));
+
     // l'url
     var url = Uri.parse("https://raw.githubusercontent.com/Chocolaterie/EniWebService/main/api/tweets.json");
 
@@ -28,6 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // mapper le json en liste de Tweet
     tweets = List<Tweet>.from(responseBodyJson.map((tweetJson) =>Tweet.fromJson(tweetJson)).toList());
+
+    // Fermer la popup de chargement
+    pd!.close();
 
     // Rafraichir l'écran
     setState(() {});
