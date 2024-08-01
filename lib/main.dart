@@ -3,6 +3,7 @@ import 'package:rcda_012_tp_flutter/app-theme.dart';
 import 'package:rcda_012_tp_flutter/auth-page.dart';
 import 'package:rcda_012_tp_flutter/footer.dart';
 import 'package:rcda_012_tp_flutter/header.dart';
+import 'package:rcda_012_tp_flutter/home-page.dart';
 import 'package:rcda_012_tp_flutter/message-card.dart';
 
 void main() {
@@ -23,38 +24,11 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppTheme.appBarTheme,
 
       ),
-      initialRoute: "/",
+      initialRoute: "/messages",
       routes: {
         "/" : (context) => AuthPage(),
         "/messages" : (context) => MyHomePage()
       },
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Message"),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          HeaderWidget(),
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                MessageCard(),
-              ],
-            ),
-          )),
-          FooterWidget()
-        ],
-      ),
     );
   }
 }

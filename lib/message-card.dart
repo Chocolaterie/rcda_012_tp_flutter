@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rcda_012_tp_flutter/tweet.dart';
 
 class MessageButton extends StatelessWidget {
   String imgPath;
@@ -12,6 +13,10 @@ class MessageButton extends StatelessWidget {
 }
 
 class MessageCard extends StatelessWidget {
+
+  Tweet tweet;
+
+  MessageCard(this.tweet);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,7 @@ class MessageCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "shiba@gmail.com",
+                                tweet.author,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Text("56s")
@@ -48,7 +53,7 @@ class MessageCard extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5.0),
                             child: Text(
-                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco",
+                              tweet.content,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 3,
                             ),
