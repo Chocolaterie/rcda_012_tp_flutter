@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rcda_012_tp_flutter/auth/AuthContext.dart';
 import 'package:rcda_012_tp_flutter/tweet.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'dart:convert' as convert;
@@ -25,19 +26,37 @@ class MessagesViewModel with ChangeNotifier {
     await Future.delayed(Duration(seconds: 1));
 
     // l'url
-    var url = Uri.parse("https://raw.githubusercontent.com/Chocolaterie/EniWebService/main/api/tweets.json");
+    var url = Uri.parse("http://127.0.01:3000/v2/comment/all");
+
+    // preparer token a envoyer
+    final headers = {
+      'Authorization' : 'Bearer ${AuthContext.token}'
+    };
 
     // appeler l'url
-    var response = await http.get(url);
+    var response = await http.get(url, headers: headers);
 
     // mapper la reponse en json
     var responseBodyJson = convert.jsonDecode(response.body);
 
-    // mapper le json en liste de Tweet
-    tweets = List<Tweet>.from(responseBodyJson.map((tweetJson) =>Tweet.fromJson(tweetJson)).toList());
-
     // Fermer la popup de chargement
     pd!.close();
+
+    // Si erreur
+    if (responseBodyJson['code'] != '200'){
+      // Erreur à afficher
+      showDialog<void>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: Text('Erreur'),
+                content: Text(responseBodyJson['message']));
+          });
+      return;
+    }
+
+    // mapper le json en liste de Tweet
+    tweets = List<Tweet>.from(responseBodyJson['data'].map((tweetJson) =>Tweet.fromJson(tweetJson)).toList());
 
     // Notifier les changements
     notifyListeners();

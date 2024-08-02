@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rcda_012_tp_flutter/app-theme.dart';
-import 'package:rcda_012_tp_flutter/auth-page.dart';
+import 'package:rcda_012_tp_flutter/auth/auth-page.dart';
 import 'package:rcda_012_tp_flutter/home/home-page.dart';
 
 void main() {
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppTheme.appBarTheme,
 
       ),
-      initialRoute: "/messages",
+      initialRoute: "/",
       routes: {
         "/" : (context) => AuthPage(),
         "/messages" : (context) => MyHomePage()

@@ -2,20 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:rcda_012_tp_flutter/app-theme.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:rcda_012_tp_flutter/app-validator.dart';
+import 'package:rcda_012_tp_flutter/auth/login-view-model.dart';
 
 class AuthPage extends StatelessWidget {
 
+  // View model
+  LoginViewModel viewModel = LoginViewModel();
+
   // La clé du formulaire
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController(text: "isaac@gmail.com");
+  final passwordController = TextEditingController(text: "123456");
 
   void onSubmit(BuildContext context) {
     // Tester si formulaire valide
     if (!_formKey.currentState!.validate()){
       return;
     }
-    // TODO : Appel service auth (test connexion et token)
-    // Changer de page
-    Navigator.pushNamed(context, "/messages");
+
+    // Appel service auth (test connexion et token)
+    viewModel.callApi(context, emailController.text!, passwordController.text!, () {
+      // Changer de page
+      Navigator.pushNamed(context, "/messages");
+    });
+
   }
 
   @override
@@ -42,13 +53,14 @@ class AuthPage extends StatelessWidget {
                   ),
                   AppTheme.wrapFormPadding(
                       TextFormField(
+                        controller: emailController,
                         validator: AppValidator.emailValidator,
                         style: TextStyle(color: Colors.white),
                         decoration: AppTheme.fieldDecoration("Email", "Veuillez saisir un email"),)
                   ),
                   AppTheme.wrapFormPadding(
                       TextFormField(
-                        validator: AppValidator.passwordValidator,
+                        controller: passwordController,
                         style: TextStyle(color: Colors.white),
                         decoration: AppTheme.fieldDecoration("Password", "Veuillez saisir un mot de passe"),)
                   ),
