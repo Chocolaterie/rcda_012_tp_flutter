@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rcda_012_tp_flutter/app-theme.dart';
 import 'package:rcda_012_tp_flutter/auth-page.dart';
-import 'package:rcda_012_tp_flutter/footer.dart';
-import 'package:rcda_012_tp_flutter/header.dart';
-import 'package:rcda_012_tp_flutter/home-page.dart';
-import 'package:rcda_012_tp_flutter/message-card.dart';
+import 'package:rcda_012_tp_flutter/home/home-page.dart';
 
 void main() {
   runApp(const MyApp());
